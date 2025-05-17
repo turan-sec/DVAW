@@ -102,7 +102,7 @@ Lekin aytaylik, bizda deeplink yo'q, lekin WebView Activity biz bergan linkni ol
 
 ## Solution 2 - Dynamic Reverse Engineering
 
-_get_payload_data() funskiyada ecrypt qilingan Flag dencrypt qilinishini ko'rsak bo'ladi:
+_get_payload_data() funskiyada ecrypt qilingan Flag decrypt qilinishini ko'rsak bo'ladi:
 
 ### strings.xml, arrays.xml yoki R.array.etc qayerdan kelyabdi? - vebsayt yozyotganda ko'pchilik Environment variablesni .env ichida saqlaydi, keyinchalik .env fayl ichidagi login, parollarni kod ichidan turib chaqiradi, Android appda ham shunga yaqin narsa bor, string, array, boshqa resurslarni /res folderda saqlashimiz mumkin:
 ```
@@ -114,7 +114,7 @@ strings.xml:
     <string name="SysCall_Num">5365637265744C6162</string>
 </resources>
 ```
-Bu yerdan turib oddiy R.string.app_name deb bizga kerakli strigni chaqiraveramiz, Shaptoli ichida ham XOR key uchga bo'lingan va alohida strings.xml ichida saqlangan
+Bu yerdan turib oddiy R.string.app_name deb bizga kerakli stringni chaqiraveramiz, Shaptoli ichida ham XOR key uchga bo'lingan va alohida strings.xml ichida saqlangan
 
 ```
     private String _get_payload_data() {
@@ -207,7 +207,7 @@ frida -U -f com.example.vulnerablewebview -l hook.js
 ```
 ![image](https://github.com/user-attachments/assets/e35822c2-78df-46e3-800f-70ee1218d5de)
 
-Dynamic Reverse Engineering qilib flagni olishdan ma'no yo'q, hujum link jo'natishdan boshlanadi, lekin bu judayam qiziq mavzu. Biz ishlatadigan Root check, SSL pinning bypass frida scriptlar aslida shunaqa ishlaydi. Masalan, Root check qiladigan Class yoki Method ```isrooted:"true"``` qaytarsa, biz uni ```isrooted:"false"``` qilib o'zgartira olamiz. Bu usulni ko'rsatishdan maqsad fridadan foydalanishni yaxshiroq tushuntirish. Aslida dengizdan tomchi desak bo'ladi, haqiqiy dasturda SSL pinning qiladigan Classni nomini topish kerak 10,000 ga yaqin Class topiladi, kod analiz qilinadi, frida-trace yoki boshqa dasturlar bilan ishlanadi.
+Dynamic Reverse Engineering qilib flagni olishdan ma'no yo'q, hujum link jo'natishdan boshlanadi, lekin bu judayam qiziq mavzu. Biz ishlatadigan Root check, SSL pinning bypass frida scriptlar aslida shunaqa ishlaydi. Masalan, Root check qiladigan Class yoki Method ```isrooted:"true"``` qaytarsa, biz uni ```isrooted:"false"``` qilib o'zgartira olamiz. Bu usulni ko'rsatishdan maqsad fridadan foydalanishni yaxshiroq tushuntirish. Aslida dengizdan tomchi desak bo'ladi, haqiqiy dasturda SSL pinning qiladigan Classni nomini topish uchun 10,000 ga yaqin Class topiladi, kod analiz qilinadi, frida-trace yoki boshqa dasturlar bilan ishlanadi.
 
 ## Boshqa solutionlar
 
